@@ -1,57 +1,63 @@
-## Obsidian Sample Plugin
+## Liquid Templates
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This is a plugin for Obsidian (https://obsidian.md).
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+With this plugin you can write your templates using [LiquidJS](https://liquidjs.com/) tags
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+This means that you can create a template made from smaller ones, for example (assuming that your templates folder is `templates`): 
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Changes the default font color to red using `styles.css`.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+*templates/header.md*
+```
+# Header
 
-### First time developing plugins?
+Insert a common header
+```
 
-Quick starting guide for new plugin devs:
+*templates/footer.md*
+```
+---
+I'm just a footer
+```
 
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+*templates/awesome_template.md*
+```
+{% include "header" %}
 
-### Releasing new releases
+This is the body of my note: {{title}}
+link to today note [[{{date}}]]
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments.
-- Publish the release.
+{% include "footer" %}
+```
 
-### Adding your plugin to the community plugin list
+When you create a note with the "Awesome template" template, you'll end up with:
 
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+*A cool title.md*
+```
+# Header
 
-### How to use
+Insert a common header
 
-- Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
+This is the body of my note: A cool title
+link to today note [[2021-05-21]
 
-### Manually installing the plugin
+---
+I'm just a footer
+```
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+But other than that you can use all the basic [tags](https://liquidjs.com/tags/overview.html) and [filters](https://liquidjs.com/filters/overview.html)
 
-### API Documentation
+## Template context
 
-See https://github.com/obsidianmd/obsidian-api
+Other than the classic, `date`, `time` and `title` variable you also have:
+
+| Name | Description |
+| --- | --- |
+| default_date_format | The date format that you have specified in the plugin settings and can be used like this: `{{ "now" | date: default_date_format }}` |
+| default_time_format | The time format that you have specified in the plugin settings and can be used like this: `{{ "now" | date: default_time_format }}` |
+
+## Roadmap
+
+For now, this plugin just includes the basic version of LiquidJS, but I want to extend it to allow:
+
+- [ ] Parse a selected template string, something like, you select `{{ "dQw4w9WgXcQ" | youtube_iframe }}` run a command and end up with the parsed result, in this case the youtube iframe. (the `youtube_iframe` tag does not exist yet)
+- [ ] Implement/install a filter that allows you to write {{ 1 | days_ago | date: default_date_format }}
