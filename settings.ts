@@ -3,6 +3,7 @@ import LiquidTemplates from "./main";
 
 export interface LiquidTemplatesSettings {
   templatesFolder: string;
+  excludeFolders: string;
   dateFormat: string;
   timeFormat: string;
   autocompleteTrigger: string;
@@ -10,6 +11,7 @@ export interface LiquidTemplatesSettings {
 
 export const DEFAULT_SETTINGS: LiquidTemplatesSettings = {
   templatesFolder: 'templates',
+  excludeFolders: "",
   dateFormat: '%Y-%m-%d',
   timeFormat: '%H:%M',
   autocompleteTrigger: ';;'
@@ -41,6 +43,19 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
           .setValue(this.plugin.settings.templatesFolder)
           .onChange(async (value) => {
             this.plugin.settings.templatesFolder = value || DEFAULT_SETTINGS.templatesFolder;
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName('Exclude folders')
+      .setDesc('Name of the folders you want to exclude from the autosuggest menu, relative to the "Templates folder" above. Comma separated values. (useful if you have a "common" or "partial" folder where you store all the partial templates)')
+      .addMomentFormat((text) =>
+        text
+          .setDefaultFormat(DEFAULT_SETTINGS.excludeFolders)
+          .setValue(this.plugin.settings.excludeFolders)
+          .onChange(async (value) => {
+            this.plugin.settings.excludeFolders = value || DEFAULT_SETTINGS.excludeFolders;
             await this.plugin.saveSettings();
           })
       );

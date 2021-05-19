@@ -28,9 +28,11 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
             return "";
           },
           readFile: async (file) => {
+            const [fileName, ...folder] = file.split('/').reverse()
             const { templatesFolder } = this.plugin.settings;
+            const folderToCheck = [templatesFolder, ...folder.reverse()].join('/')
             // TODO: find a better way to do this
-            const fileObj = getTFilesFromFolder(app, templatesFolder).find(f => f.basename === file);
+            const fileObj = getTFilesFromFolder(app, folderToCheck).find(f => f.basename === fileName);
             return app.vault.read(fileObj);
           },
           existsSync: () => {
@@ -66,7 +68,7 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
   getTemplateSuggestions(inputStr: string): ITemplateCompletion[] {
     // find the list of files
     // TODO: filter before returning all the files
-    const templates = getTFilesFromFolder(this.app, this.plugin.settings.templatesFolder);
+    const templates = getTFilesFromFolder(this.app, this.plugin.settings.templatesFolder, this.plugin.settings.excludeFolders.split(','));
     return templates
       .map(file => ({ label: file.basename, file: file }))
       .filter((items) => items.label.toLowerCase().startsWith(inputStr));
