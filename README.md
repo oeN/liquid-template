@@ -4,6 +4,10 @@ This is a plugin for Obsidian (https://obsidian.md).
 
 With this plugin, you can write your templates using [LiquidJS](https://liquidjs.com/) tags
 
+## Disclaimer
+
+This plugin is still under heavy development, so it's not optimized yet and has basic features. 
+
 ## Examples
 
 This means that you can create a template made from smaller ones, for example (assuming that your templates folder is `templates`): 
