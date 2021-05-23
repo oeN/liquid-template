@@ -52,10 +52,9 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
       .setDesc('Name of the folders you want to exclude from the autosuggest menu, relative to the "Templates folder" above. Comma separated values. (useful if you have a "common" or "partial" folder where you store all the partial templates)')
       .addMomentFormat((text) =>
         text
-          .setDefaultFormat(DEFAULT_SETTINGS.excludeFolders)
           .setValue(this.plugin.settings.excludeFolders)
           .onChange(async (value) => {
-            this.plugin.settings.excludeFolders = value || DEFAULT_SETTINGS.excludeFolders;
+            this.plugin.settings.excludeFolders = value;
             await this.plugin.saveSettings();
           })
       );
