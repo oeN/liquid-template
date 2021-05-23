@@ -2,7 +2,8 @@ import { App, TFile } from "obsidian";
 import { Liquid } from "liquidjs";
 import type PoweredTemplates from "../main";
 import CodeMirrorSuggest from "./codemirror-suggest";
-import { getTFilesFromFolder } from "utils";
+import { getTFilesFromFolder, customizeEngine } from "../utils";
+import { format } from "date-fns";
 
 interface ITemplateCompletion {
   label: string;
@@ -21,7 +22,7 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
 
     this.plugin = plugin;
     // TODO: move me in a separate class
-    this.engine = new Liquid({
+    this.engine = customizeEngine(new Liquid({
       fs: {
           readFileSync: (file) => {
             // TODO: implement me
@@ -47,7 +48,7 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
       },
       extname: '.md',
       greedy: true,
-    });
+    }));
   }
 
   open(): void {
@@ -83,13 +84,18 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
   }
 
   async generateContext() {
+    const {
+      dateFormat,
+      timeFormat
+    } = this.plugin.settings;
+
     return {
       // TODO: improve me
-      date: await this.engine.parseAndRender(`{{ "now" | date: "${this.plugin.settings.dateFormat}"}}`),
-      time: await this.engine.parseAndRender(`{{ "now" | date: "${this.plugin.settings.timeFormat}"}}`),
+      date: format(Date.now(), dateFormat),
+      time: format(Date.now(), timeFormat),
       title: await this.app.workspace.getActiveFile().basename,
-      default_date_format: this.plugin.settings.dateFormat,
-      default_time_format: this.plugin.settings.timeFormat
+      default_date_format: dateFormat,
+      default_time_format: timeFormat
     }
   }
 
@@ -99,6 +105,7 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
   ): Promise<void> {
     const head = this.getStartPos();
     const anchor = this.cmEditor.getCursor();
+    console.log('--- context', await this.generateContext());
 
     if (suggestion.file) {
       const templateString = await this.app.vault.read(suggestion.file)

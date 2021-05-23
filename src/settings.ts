@@ -1,4 +1,3 @@
-import { get, isEmpty } from "lodash";
 import { App, PluginSettingTab, Setting } from "obsidian";
 import LiquidTemplates from "./main";
 
