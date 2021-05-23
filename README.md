@@ -8,6 +8,12 @@ With this plugin, you can write your templates using [LiquidJS](https://liquidjs
 
 This plugin is still under heavy development, so it's not optimized yet and has basic features. 
 
+## Autocomplete
+
+There is an aucomplete feature that by default is triggered by `;;` but can be customized in the options
+
+![](imgs/autocomplete-liquid-templates.gif)
+
 ## Examples
 
 This means that you can create a template made from smaller ones, for example (assuming that your templates folder is `templates`): 
