@@ -1,3 +1,4 @@
+import { get, isEmpty } from "lodash";
 import { App, PluginSettingTab, Setting } from "obsidian";
 import LiquidTemplates from "./main";
 
@@ -40,9 +41,9 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
       .addText((text) =>
         text
           .setPlaceholder(DEFAULT_SETTINGS.templatesFolder)
-          .setValue(this.plugin.settings.templatesFolder)
+          .setValue(this.plugin.settings.templatesFolder || DEFAULT_SETTINGS.templatesFolder)
           .onChange(async (value) => {
-            this.plugin.settings.templatesFolder = value || DEFAULT_SETTINGS.templatesFolder;
+            this.plugin.settings.templatesFolder = value;
             await this.plugin.saveSettings();
           })
       );
@@ -52,7 +53,7 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
       .setDesc('Name of the folders you want to exclude from the autosuggest menu, relative to the "Templates folder" above. Comma separated values. (useful if you have a "common" or "partial" folder where you store all the partial templates)')
       .addText((text) =>
         text
-          .setValue(this.plugin.settings.excludeFolders)
+          .setValue(this.plugin.settings.excludeFolders || DEFAULT_SETTINGS.excludeFolders)
           .onChange(async (value) => {
             this.plugin.settings.excludeFolders = value;
             await this.plugin.saveSettings();
@@ -65,9 +66,9 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
       .addText((text) =>
         text
           .setPlaceholder(DEFAULT_SETTINGS.dateFormat)
-          .setValue(this.plugin.settings.dateFormat)
+          .setValue(this.plugin.settings.dateFormat || DEFAULT_SETTINGS.dateFormat)
           .onChange(async (value) => {
-            this.plugin.settings.dateFormat = value || DEFAULT_SETTINGS.dateFormat;
+            this.plugin.settings.dateFormat = value;
             await this.plugin.saveSettings();
           })
       );
@@ -78,9 +79,9 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
       .addText((text) =>
         text
           .setPlaceholder(DEFAULT_SETTINGS.timeFormat)
-          .setValue(this.plugin.settings.timeFormat)
+          .setValue(this.plugin.settings.timeFormat || DEFAULT_SETTINGS.timeFormat)
           .onChange(async (value) => {
-            this.plugin.settings.timeFormat = value || DEFAULT_SETTINGS.timeFormat;
+            this.plugin.settings.timeFormat = value;
             await this.plugin.saveSettings();
           })
       );

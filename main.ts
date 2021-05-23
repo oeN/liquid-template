@@ -36,7 +36,7 @@ export default class LiquidTemplates extends Plugin {
   };
 
   async loadSettings(): Promise<void> {
-    this.settings = Object.assign(DEFAULT_SETTINGS, await this.loadData());
+    this.settings = Object.assign({ ...DEFAULT_SETTINGS }, await this.loadData());
   }
 
   async saveSettings(): Promise<void> {
