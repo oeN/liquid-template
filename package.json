@@ -1,6 +1,6 @@
 {
   "name": "liquid-templates",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Empower your template with LiquidJS tags",
   "main": "main.js",
   "scripts": {
