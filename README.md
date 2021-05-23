@@ -71,5 +71,5 @@ Other than the classic, `date`, `time` and `title` variable you also have:
 
 For now, this plugin just includes the basic version of LiquidJS, but I want to extend it to allow:
 
-- [ ] Parse a selected template string, something like you select `{{ "dQw4w9WgXcQ" | youtube_iframe }}` run a command and end up with the parsed result, in this case, the youtube iframe. (the `youtube_iframe` tag does not exist yet)
 - [ ] Implement/install a filter that allows you to write `{{ 1 | days_ago | date: default_date_format }}`
+- [ ] Parse a selected template string, something like you select `{{ "dQw4w9WgXcQ" | youtube_iframe }}` run a command and end up with the parsed result, in this case, the youtube iframe. (the `youtube_iframe` tag does not exist yet)
