@@ -32,6 +32,7 @@ export function getTFilesFromFolder(app: App, folderName: string, subfoldersToEx
 }
 
 function parseDate(stringToParse: string): Date {
+  // TODO: find a way to support i18n
   if(['now', 'today'].includes(stringToParse)) return new Date;
   if(stringToParse === 'yesterday') return subDays(Date.now(), 1);
   // try to parse the given string
