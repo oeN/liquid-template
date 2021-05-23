@@ -68,7 +68,11 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
   getTemplateSuggestions(inputStr: string): ITemplateCompletion[] {
     // find the list of files
     // TODO: filter before returning all the files
-    const templates = getTFilesFromFolder(this.app, this.plugin.settings.templatesFolder, this.plugin.settings.excludeFolders.split(','));
+    const {
+      templatesFolder,
+      excludeFolders
+    } = this.plugin.settings;
+    const templates = getTFilesFromFolder(this.app, templatesFolder, excludeFolders.split(','));
     return templates
       .map(file => ({ label: file.basename, file: file }))
       .filter((items) => items.label.toLowerCase().startsWith(inputStr));

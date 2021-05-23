@@ -1,4 +1,5 @@
 import { App, normalizePath, TAbstractFile, TFile, TFolder, Vault } from "obsidian";
+import { compact } from 'lodash';
 
 export function getTFilesFromFolder(app: App, folderName: string, subfoldersToExclude?: string[]): Array<TFile> {
   folderName = normalizePath(folderName);
@@ -6,7 +7,7 @@ export function getTFilesFromFolder(app: App, folderName: string, subfoldersToEx
   if (!folder) throw new Error(`${folderName} folder doesn't exist`);
   if (!(folder instanceof TFolder)) throw new Error(`${folderName} is a file, not a folder`);
 
-  const foldersToExclude = subfoldersToExclude
+  const foldersToExclude = subfoldersToExclude && compact(subfoldersToExclude).length > 0
     ? subfoldersToExclude.map(subfolder => [folderName,subfolder].join('/'))
     : [];
 
