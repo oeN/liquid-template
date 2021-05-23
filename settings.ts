@@ -37,9 +37,9 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Templates folder')
       .setDesc('Folder where to find your templates, it will be used also as root folder for the liquid tags, like the include ones')
-      .addMomentFormat((text) =>
+      .addText((text) =>
         text
-          .setDefaultFormat(DEFAULT_SETTINGS.templatesFolder)
+          .setPlaceholder(DEFAULT_SETTINGS.templatesFolder)
           .setValue(this.plugin.settings.templatesFolder)
           .onChange(async (value) => {
             this.plugin.settings.templatesFolder = value || DEFAULT_SETTINGS.templatesFolder;
@@ -50,7 +50,7 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Exclude folders')
       .setDesc('Name of the folders you want to exclude from the autosuggest menu, relative to the "Templates folder" above. Comma separated values. (useful if you have a "common" or "partial" folder where you store all the partial templates)')
-      .addMomentFormat((text) =>
+      .addText((text) =>
         text
           .setValue(this.plugin.settings.excludeFolders)
           .onChange(async (value) => {
@@ -62,9 +62,9 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Date format')
       .setDesc('Output format for render dates')
-      .addMomentFormat((text) =>
+      .addText((text) =>
         text
-          .setDefaultFormat(DEFAULT_SETTINGS.dateFormat)
+          .setPlaceholder(DEFAULT_SETTINGS.dateFormat)
           .setValue(this.plugin.settings.dateFormat)
           .onChange(async (value) => {
             this.plugin.settings.dateFormat = value || DEFAULT_SETTINGS.dateFormat;
@@ -75,9 +75,9 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Time format')
       .setDesc('Output format for render time')
-      .addMomentFormat((text) =>
+      .addText((text) =>
         text
-          .setDefaultFormat(DEFAULT_SETTINGS.timeFormat)
+          .setPlaceholder(DEFAULT_SETTINGS.timeFormat)
           .setValue(this.plugin.settings.timeFormat)
           .onChange(async (value) => {
             this.plugin.settings.timeFormat = value || DEFAULT_SETTINGS.timeFormat;
@@ -88,7 +88,7 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Autocomplete trigger')
       .setDesc('Character/s that trigger the autocomplete menu')
-      .addMomentFormat((text) =>
+      .addText((text) =>
         text
           .setPlaceholder(DEFAULT_SETTINGS.autocompleteTrigger)
           .setValue(this.plugin.settings.autocompleteTrigger || DEFAULT_SETTINGS.autocompleteTrigger)
