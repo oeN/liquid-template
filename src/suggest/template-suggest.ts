@@ -1,9 +1,11 @@
 import { App, TFile } from "obsidian";
 import { Liquid } from "liquidjs";
-import type PoweredTemplates from "../main";
-import CodeMirrorSuggest from "./codemirror-suggest";
-import { getTFilesFromFolder, customizeEngine } from "../utils";
 import { format } from "date-fns";
+
+import CodeMirrorSuggest from "./codemirror-suggest";
+import type PoweredTemplates from "../main";
+import { getTFilesFromFolder } from "../utils";
+import { initEngine } from "src/engine";
 
 interface ITemplateCompletion {
   label: string;
@@ -21,34 +23,7 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
     super(app, plugin.settings.autocompleteTrigger);
 
     this.plugin = plugin;
-    // TODO: move me in a separate class
-    this.engine = customizeEngine(new Liquid({
-      fs: {
-          readFileSync: (file) => {
-            // TODO: implement me
-            return "";
-          },
-          readFile: async (file) => {
-            const [fileName, ...folder] = file.split('/').reverse()
-            const { templatesFolder } = this.plugin.settings;
-            const folderToCheck = [templatesFolder, ...folder.reverse()].join('/')
-            // TODO: find a better way to do this
-            const fileObj = getTFilesFromFolder(app, folderToCheck).find(f => f.basename === fileName);
-            return app.vault.read(fileObj);
-          },
-          existsSync: () => {
-            return true
-          },
-          exists: async () => {
-            return true
-          },
-          resolve: (_root, file, _ext) => {
-            return file
-          }
-      },
-      extname: '.md',
-      greedy: true,
-    }));
+    this.engine = initEngine(app, plugin);
   }
 
   open(): void {
@@ -105,7 +80,6 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
   ): Promise<void> {
     const head = this.getStartPos();
     const anchor = this.cmEditor.getCursor();
-    console.log('--- context', await this.generateContext());
 
     if (suggestion.file) {
       const templateString = await this.app.vault.read(suggestion.file)

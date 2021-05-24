@@ -58,6 +58,23 @@ I'm just a footer
 
 But other than that, you can use all the basic [tags](https://liquidjs.com/tags/overview.html) and [filters](https://liquidjs.com/filters/overview.html)
 
+## Custom Filters
+
+For now I'll keep the documentation of the filters here, when they become more I'll move it somewhere more convenient
+
+### `date`
+
+The `date` filter has been replaced with a custom one
+<!-- TODO: explain why and insert some example -->
+
+### `days_ago`
+
+<!-- TODO: explain the filter and add some example -->
+
+### `days_after`
+
+<!-- TODO: explain the filter and add some example -->
+
 ## Template context
 
 Other than the classic, `date`, `time` and `title` variable you also have:
