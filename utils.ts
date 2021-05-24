@@ -1,6 +1,8 @@
 import { App, normalizePath, TAbstractFile, TFile, TFolder, Vault } from "obsidian";
 import { compact } from 'lodash';
 
+const ALLOWED_EXTENSIONS = ['md']
+
 export function getTFilesFromFolder(app: App, folderName: string, subfoldersToExclude?: string[]): Array<TFile> {
   folderName = normalizePath(folderName);
   let folder = app.vault.getAbstractFileByPath(folderName);
@@ -15,6 +17,7 @@ export function getTFilesFromFolder(app: App, folderName: string, subfoldersToEx
   Vault.recurseChildren(folder, (file: TAbstractFile) => {
     if (foldersToExclude.some(toExclude => file.path.startsWith(toExclude))) return;
     if (!(file instanceof TFile)) return;
+    if (!ALLOWED_EXTENSIONS.includes(file.extension)) return;
 
     files.push(file);
   });

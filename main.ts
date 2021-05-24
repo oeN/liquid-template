@@ -18,6 +18,10 @@ export default class LiquidTemplates extends Plugin {
 
   onunload(): void {
     console.log('unloading liquid templates plugin');
+    // remove the autosuggest handler when unloading the plugin
+    this.app.workspace.iterateCodeMirrors((cm: CodeMirror.Editor) => {
+      cm.off("change", this.autosuggestHandler);
+    })
   }
 
   setupAutosuggest(): void {
