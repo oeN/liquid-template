@@ -1,15 +1,26 @@
 import { addDays, format, subDays } from 'date-fns';
 
-import BaseFilter from './base_filter';
+import { BaseFilter, BaseFilterProps } from './base_filter';
 
 export default class DateFiler extends BaseFilter {
-  filterName = 'date';
+  originalFilter: Function;
+
+  constructor(props: BaseFilterProps) {
+    super({ ...props, filterName: 'date' });
+    this.originalFilter = this.engine.filters.get('date');
+  }
 
   handler = (givenValue: number | string, dateFormat?: string): string | number => {
     const dateToFormat = (typeof givenValue === 'number')
       ? givenValue
       : this.parseDate(givenValue)
     const formatToUse = dateFormat || this.plugin.settings.dateFormat;
+
+    // TODO: improve or remove me: keep backwards compatibility with the current 0.1.5 version
+    if (formatToUse.includes('%')) {
+      // TODO: send a notification when using this function
+      return this.originalFilter(givenValue, dateFormat);
+    }
 
     try {
       return format(dateToFormat, formatToUse)

@@ -13,7 +13,7 @@ export function applyCustomFilters(engine: Liquid, plugin: LiquidTemplates) {
     DateFilter,
     DaysAgo,
     DaysAfter
-  ].forEach(filter => new filter(plugin, engine))
+  ].forEach(filter => new filter({ plugin, engine }).register())
 }
 
 export function initEngine(app: App, plugin: LiquidTemplates): Liquid {

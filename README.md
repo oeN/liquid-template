@@ -64,23 +64,65 @@ For now I'll keep the documentation of the filters here, when they become more I
 
 ### `date`
 
-The `date` filter has been replaced with a custom one
-<!-- TODO: explain why and insert some example -->
+The LiquidJS [built-in `date` filter](https://liquidjs.com/filters/date.html) has been replaced with a custom one.
+For now, if there is a `%` character in the date format the old filter is used, otherwise the new one will take place.
+
+The new `date` filter uses [date-fns](https://date-fns.org/) as library to handle dates, and the format strings to use are showed here: [date-fns formats](https://date-fns.org/v2.21.3/docs/format)
+
+There are also some special words that can be used with this filter:
+
+| word | example | effect |
+| ---- | ------- | ------ |
+| "now" | {{ "now" | date: "yyyy-MM-dd" }} | Use the date from `new Date` and formatted with the given format |
+| "today" | {{ "today" | date: "yyyy-MM-dd" }} | same as `now` |
+| "yesterday" | {{ "yesterday" | date: "yyyy-MM-dd" }} | use the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) function to subtract `1` from `Date.now()` and formatted with the given format |
+| "tomorrow" | {{ "tomorrow" | date: "yyyy-MM-dd" }} | use the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) function to add `1` to `Date.now()` and formatted with the given format |
+
+#### Default format
+
+Now you can use the "Date Format" you defined inside the plugin settings in a easier way:
+
+**Before**: `{{ "now" | date: default_date_format }}`
+
+**Now**: `{{ "now" | date }}` the format you specified in the settings is now used as default
 
 ### `days_ago`
 
-<!-- TODO: explain the filter and add some example -->
+A simple filter that uses the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) to subtract days from the current date (`Date.now()`)
+
+Keep in mind that this filter returns a date that needs to be formatted, so needs to be used with the `date` filter, like this:
+
+`{{ 1 | days_ago | date }}` same as `{{ "yesterday" | date }}`
+
+`{{ 2 | days_ago | date }}` return the date from two days ago
+
+This can be used for a "Weekly Review" template, something like:
+
+- [[{{ 7 | days_ago | date }}]]
+- [[{{ 6 | days_ago | date }}]]
+- [[{{ 5 | days_ago | date }}]]
+- [[{{ 4 | days_ago | date }}]]
+- [[{{ 3 | days_ago | date }}]]
+- [[{{ 2 | days_ago | date }}]]
+- [[{{ 1 | days_ago | date }}]]
+
 
 ### `days_after`
 
-<!-- TODO: explain the filter and add some example -->
+A simple filter that uses the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) to add days to the current date (`Date.now()`)
+
+Keep in mind that this filter returns a date that needs to be formatted, so needs to be used with the `date` filter, like this:
+
+`{{ 1 | days_after | date }}` same as `{{ "tomorrow" | date }}`
+
+`{{ 2 | days_after | date }}` return the date from two days from now
 
 ## Template context
 
 Other than the classic, `date`, `time` and `title` variable you also have:
 
-| Name                | Description                                                                                                                              |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Name                | Description                                                                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | default_date_format | The date format that you have specified in the plugin settings and can be used like this: <code>{{ "now" &#124; date: default_date_format }}</code> |
 | default_time_format | The time format that you have specified in the plugin settings and can be used like this: <code>{{ "now" &#124; date: default_time_format }}</code> |
 
