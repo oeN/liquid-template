@@ -73,10 +73,10 @@ There are also some special words that can be used with this filter:
 
 | word        | example                                     | effect                                                                                                                                        |
 | ----------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| "now"       | {{ "now" &#124; date: "yyyy-MM-dd" }}       | Use the date from `new Date` and formatted with the given format                                                                              |
-| "today"     | {{ "today" &#124; date: "yyyy-MM-dd" }}     | same as `now`                                                                                                                                 |
-| "yesterday" | {{ "yesterday" &#124; date: "yyyy-MM-dd" }} | use the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) function to subtract `1` from `Date.now()` and formatted with the given format |
-| "tomorrow"  | {{ "tomorrow" &#124; date: "yyyy-MM-dd" }}  | use the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) function to add `1` to `Date.now()` and formatted with the given format        |
+| "now"       | `{{ "now" &#124; date: "yyyy-MM-dd" }}`       | Use the date from `new Date` and formatted with the given format                                                                              |
+| "today"     | `{{ "today" &#124; date: "yyyy-MM-dd" }}`     | same as `now`                                                                                                                                 |
+| "yesterday" | `{{ "yesterday" &#124; date: "yyyy-MM-dd" }}` | use the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) function to subtract `1` from `Date.now()` and formatted with the given format |
+| "tomorrow"  | `{{ "tomorrow" &#124; date: "yyyy-MM-dd" }}`  | use the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) function to add `1` to `Date.now()` and formatted with the given format        |
 
 #### Default format
 
@@ -131,5 +131,5 @@ For now, this plugin just includes the basic version of LiquidJS, but I want to 
 
 - [ ] Add autocomplete to the template folder, excluded folder settings
 - [ ] Implement a fuzzy finder for the autocomplete
-- [ ] Implement/install a filter that allows you to write `{{ 1 | days_ago | date: default_date_format }}`
+- [x] Implement/install a filter that allows you to write `{{ 1 | days_ago | date: default_date_format }}`
 - [ ] Parse a selected template string, something like you select `{{ "dQw4w9WgXcQ" | youtube_iframe }}` run a command and end up with the parsed result, in this case, the youtube iframe. (the `youtube_iframe` tag does not exist yet)
