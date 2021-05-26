@@ -62,7 +62,7 @@ But other than that, you can use all the basic [tags](https://liquidjs.com/tags/
 
 For now I'll keep the documentation of the filters here, when they become more I'll move it somewhere more convenient
 
-### `date` filter
+## `date` filter
 
 The LiquidJS [built-in `date` filter](https://liquidjs.com/filters/date.html) has been replaced with a custom one.
 For now, if there is a `%` character in the date format the old filter is used, otherwise the new one will take place.
@@ -71,14 +71,37 @@ The new `date` filter uses [date-fns](https://date-fns.org/) as library to handl
 
 There are also some special words that can be used with this filter:
 
-| word        | example                                     | effect                                                                                                                                        |
-| ----------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| "now"       | `{{ "now" &#124; date: "yyyy-MM-dd" }}`       | Use the date from `new Date` and formatted with the given format                                                                              |
-| "today"     | `{{ "today" &#124; date: "yyyy-MM-dd" }}`     | same as `now`                                                                                                                                 |
-| "yesterday" | `{{ "yesterday" &#124; date: "yyyy-MM-dd" }}` | use the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) function to subtract `1` from `Date.now()` and formatted with the given format |
-| "tomorrow"  | `{{ "tomorrow" &#124; date: "yyyy-MM-dd" }}`  | use the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) function to add `1` to `Date.now()` and formatted with the given format        |
+**"now"**
 
-#### Default format
+`{{ "now" | date: "yyyy-MM-dd" }}`
+
+Use the date from `new Date` and formatted with the given format
+
+---
+
+**"today"**
+
+`{{ "today" | date: "yyyy-MM-dd" }}`
+
+same as `now`
+
+---
+
+**"yesterday"**
+
+`{{ "yesterday" | date: "yyyy-MM-dd" }}`
+
+use the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) function to subtract `1` from `Date.now()` and formatted with the given format
+
+---
+
+**"tomorrow"**
+
+`{{ "tomorrow" | date: "yyyy-MM-dd" }}`
+
+use the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) function to add `1` to `Date.now()` and formatted with the given format
+
+### `date` Default format
 
 Now you can use the "Date Format" you defined inside the plugin settings in a easier way:
 
@@ -86,7 +109,7 @@ Now you can use the "Date Format" you defined inside the plugin settings in a ea
 
 **Now**: `{{ "now" | date }}` the format you specified in the settings is now used as default
 
-### `days_ago` filter
+## `days_ago` filter
 
 A simple filter that uses the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) to subtract days from the current date (`Date.now()`)
 
@@ -107,7 +130,7 @@ This can be used for a "Weekly Review" template, something like:
 - [[{{ 1 | days_ago | date }}]]
 ```
 
-### `days_after` filter
+## `days_after` filter
 
 A simple filter that uses the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) to add days to the current date (`Date.now()`)
 
