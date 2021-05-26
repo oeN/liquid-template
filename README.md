@@ -72,34 +72,24 @@ The new `date` filter uses [date-fns](https://date-fns.org/) as library to handl
 There are also some special words that can be used with this filter:
 
 **"now"**
-
 `{{ "now" | date: "yyyy-MM-dd" }}`
-
 Use the date from `new Date` and formatted with the given format
 
----
 
 **"today"**
-
 `{{ "today" | date: "yyyy-MM-dd" }}`
-
 same as `now`
 
----
 
 **"yesterday"**
-
 `{{ "yesterday" | date: "yyyy-MM-dd" }}`
-
 use the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) function to subtract `1` from `Date.now()` and formatted with the given format
 
----
 
 **"tomorrow"**
-
 `{{ "tomorrow" | date: "yyyy-MM-dd" }}`
-
 use the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) function to add `1` to `Date.now()` and formatted with the given format
+
 
 ### `date` Default format
 
