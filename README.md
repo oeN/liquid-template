@@ -62,7 +62,7 @@ But other than that, you can use all the basic [tags](https://liquidjs.com/tags/
 
 For now I'll keep the documentation of the filters here, when they become more I'll move it somewhere more convenient
 
-### `date`
+### `date` filter
 
 The LiquidJS [built-in `date` filter](https://liquidjs.com/filters/date.html) has been replaced with a custom one.
 For now, if there is a `%` character in the date format the old filter is used, otherwise the new one will take place.
@@ -86,18 +86,18 @@ Now you can use the "Date Format" you defined inside the plugin settings in a ea
 
 **Now**: `{{ "now" | date }}` the format you specified in the settings is now used as default
 
-### `days_ago`
+### `days_ago` filter
 
 A simple filter that uses the [`subDays`](https://date-fns.org/v2.21.3/docs/subDays) to subtract days from the current date (`Date.now()`)
 
 Keep in mind that this filter returns a date that needs to be formatted, so needs to be used with the `date` filter, like this:
 
-`{{ 1 | days_ago | date }}` same as `{{ "yesterday" | date }}`
-
-`{{ 2 | days_ago | date }}` return the date from two days ago
+- `{{ 1 | days_ago | date }}` same as `{{ "yesterday" | date }}`
+- `{{ 2 | days_ago | date }}` return the date from two days ago
 
 This can be used for a "Weekly Review" template, something like:
 
+```
 - [[{{ 7 | days_ago | date }}]]
 - [[{{ 6 | days_ago | date }}]]
 - [[{{ 5 | days_ago | date }}]]
@@ -105,17 +105,16 @@ This can be used for a "Weekly Review" template, something like:
 - [[{{ 3 | days_ago | date }}]]
 - [[{{ 2 | days_ago | date }}]]
 - [[{{ 1 | days_ago | date }}]]
+```
 
-
-### `days_after`
+### `days_after` filter
 
 A simple filter that uses the [`addDays`](https://date-fns.org/v2.21.3/docs/addDays) to add days to the current date (`Date.now()`)
 
 Keep in mind that this filter returns a date that needs to be formatted, so needs to be used with the `date` filter, like this:
 
-`{{ 1 | days_after | date }}` same as `{{ "tomorrow" | date }}`
-
-`{{ 2 | days_after | date }}` return the date from two days from now
+- `{{ 1 | days_after | date }}` same as `{{ "tomorrow" | date }}`
+- `{{ 2 | days_after | date }}` return the date from two days from now
 
 ## Template context
 
