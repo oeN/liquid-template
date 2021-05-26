@@ -1,6 +1,6 @@
-import { get, isEmpty } from "lodash";
 import { App, PluginSettingTab, Setting } from "obsidian";
 import LiquidTemplates from "./main";
+import { format } from 'date-fns';
 
 export interface LiquidTemplatesSettings {
   templatesFolder: string;
@@ -13,8 +13,8 @@ export interface LiquidTemplatesSettings {
 export const DEFAULT_SETTINGS: LiquidTemplatesSettings = {
   templatesFolder: 'templates',
   excludeFolders: "",
-  dateFormat: '%Y-%m-%d',
-  timeFormat: '%H:%M',
+  dateFormat: 'yyyy-MM-dd',
+  timeFormat: 'k:m',
   autocompleteTrigger: ';;'
 };
 
@@ -60,9 +60,26 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
           })
       );
 
+    const dateFormatDesc = document.createDocumentFragment();
+    dateFormatDesc.append(
+      'Output format for render dates.',
+      dateFormatDesc.createEl('br'),
+      'For more syntax, refer to ',
+      dateFormatDesc.createEl("a", {
+				href: "https://date-fns.org/v2.21.3/docs/format",
+				text: "format reference",
+			}),
+      dateFormatDesc.createEl('br'),
+      'current format: ',
+      dateFormatDesc.createEl('b', {
+        cls: 'u-pop',
+        text: format(new Date, this.plugin.settings.dateFormat)
+      })
+    );
+
     new Setting(containerEl)
       .setName('Date format')
-      .setDesc('Output format for render dates')
+      .setDesc(dateFormatDesc)
       .addText((text) =>
         text
           .setPlaceholder(DEFAULT_SETTINGS.dateFormat)
@@ -73,9 +90,27 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
           })
       );
 
+
+    const timeFormatDesc = document.createDocumentFragment();
+    timeFormatDesc.append(
+      'Output format for render time.',
+      timeFormatDesc.createEl('br'),
+      'For more syntax, refer to ',
+      timeFormatDesc.createEl("a", {
+				href: "https://date-fns.org/v2.21.3/docs/format",
+				text: "format reference",
+			}),
+      timeFormatDesc.createEl('br'),
+      'current format: ',
+      timeFormatDesc.createEl('b', {
+        cls: 'u-pop',
+        text: format(new Date, this.plugin.settings.timeFormat)
+      })
+    );
+
     new Setting(containerEl)
       .setName('Time format')
-      .setDesc('Output format for render time')
+      .setDesc(timeFormatDesc)
       .addText((text) =>
         text
           .setPlaceholder(DEFAULT_SETTINGS.timeFormat)

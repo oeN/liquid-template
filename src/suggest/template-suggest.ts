@@ -1,8 +1,11 @@
 import { App, TFile } from "obsidian";
 import { Liquid } from "liquidjs";
-import type PoweredTemplates from "../main";
+import { format } from "date-fns";
+
 import CodeMirrorSuggest from "./codemirror-suggest";
-import { getTFilesFromFolder } from "utils";
+import type PoweredTemplates from "../main";
+import { getTFilesFromFolder } from "../utils";
+import { initEngine } from "src/engine";
 
 interface ITemplateCompletion {
   label: string;
@@ -20,34 +23,7 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
     super(app, plugin.settings.autocompleteTrigger);
 
     this.plugin = plugin;
-    // TODO: move me in a separate class
-    this.engine = new Liquid({
-      fs: {
-          readFileSync: (file) => {
-            // TODO: implement me
-            return "";
-          },
-          readFile: async (file) => {
-            const [fileName, ...folder] = file.split('/').reverse()
-            const { templatesFolder } = this.plugin.settings;
-            const folderToCheck = [templatesFolder, ...folder.reverse()].join('/')
-            // TODO: find a better way to do this
-            const fileObj = getTFilesFromFolder(app, folderToCheck).find(f => f.basename === fileName);
-            return app.vault.read(fileObj);
-          },
-          existsSync: () => {
-            return true
-          },
-          exists: async () => {
-            return true
-          },
-          resolve: (_root, file, _ext) => {
-            return file
-          }
-      },
-      extname: '.md',
-      greedy: true,
-    });
+    this.engine = initEngine(app, plugin);
   }
 
   open(): void {
@@ -83,13 +59,18 @@ export default class TemplateSuggest extends CodeMirrorSuggest<ITemplateCompleti
   }
 
   async generateContext() {
+    const {
+      dateFormat,
+      timeFormat
+    } = this.plugin.settings;
+
     return {
       // TODO: improve me
-      date: await this.engine.parseAndRender(`{{ "now" | date: "${this.plugin.settings.dateFormat}"}}`),
-      time: await this.engine.parseAndRender(`{{ "now" | date: "${this.plugin.settings.timeFormat}"}}`),
+      date: format(Date.now(), dateFormat),
+      time: format(Date.now(), timeFormat),
       title: await this.app.workspace.getActiveFile().basename,
-      default_date_format: this.plugin.settings.dateFormat,
-      default_time_format: this.plugin.settings.timeFormat
+      default_date_format: dateFormat,
+      default_time_format: timeFormat
     }
   }
 
