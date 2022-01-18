@@ -10,7 +10,7 @@ This plugin is still under heavy development, so it's not optimized yet and has 
 
 ## Autocomplete
 
-There is an aucomplete feature that by default is triggered by `;;` but can be customized in the options
+There is an autocomplete feature that by default is triggered by `;;` but can be customized in the options
 
 ![](imgs/autocomplete-liquid-templates.gif)
 
