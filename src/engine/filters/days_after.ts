@@ -7,5 +7,5 @@ export default class DaysAfter extends BaseFilter {
     super({ ...props, filterName: 'days_after' });
   }
 
-  handler = (daysToSub: number): Date => addDays(Date.now(), daysToSub);
+  handler = (daysToAdd: number): Date => addDays(Date.now(), daysToAdd);
 }

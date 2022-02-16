@@ -121,9 +121,18 @@ export class LiquidTemplatesSettingsTab extends PluginSettingTab {
           })
       );
 
+    const triggerDesc = document.createDocumentFragment();
+    triggerDesc.append(
+      'Character/s that trigger the autocomplete menu.',
+      triggerDesc.createEl('br'),
+      triggerDesc.createEl('b', {
+        cls: 'u-pop',
+        text: 'NOTE: if you change this setting you need to reload Obsidian in order to take action.'
+      })
+    );
     new Setting(containerEl)
       .setName('Autocomplete trigger')
-      .setDesc('Character/s that trigger the autocomplete menu')
+      .setDesc(triggerDesc)
       .addText((text) =>
         text
           .setPlaceholder(DEFAULT_SETTINGS.autocompleteTrigger)
