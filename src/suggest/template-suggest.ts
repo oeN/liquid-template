@@ -124,7 +124,7 @@ export default class TemplateSuggest extends EditorSuggest<ITemplateCompletion> 
 
     const match = lineContents
       .substring(0, cursor.ch)
-      .match(new RegExp(`(?:^|\s|\W)(${this.triggerPhrase}[^${this.triggerPhrase}]*$)`));
+      .match(new RegExp(`${this.triggerPhrase}(.*)`));
 
     if (match === null) return null;
 
@@ -141,16 +141,9 @@ export default class TemplateSuggest extends EditorSuggest<ITemplateCompletion> 
     cursor: EditorPosition
   ): EditorSuggestTriggerInfo {
     return {
-      start: this.getStartPos(match, cursor.line),
+      start: { line: cursor.line, ch: match.index },
       end: cursor,
-      query: match[1].substring(this.triggerPhrase.length),
-    };
-  }
-
-  protected getStartPos(match: RegExpMatchArray, line: number): EditorPosition {
-    return {
-      line: line,
-      ch: match.index + match[0].length - match[1].length,
+      query: match[1],
     };
   }
 }

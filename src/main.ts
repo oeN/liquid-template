@@ -27,7 +27,6 @@ export default class LiquidTemplates extends Plugin {
 
   async saveSettings(): Promise<void> {
     // the templates folder can change
-    // this.setupAutosuggest();
     await this.saveData(this.settings);
   }
 
