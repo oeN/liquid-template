@@ -1,7 +1,7 @@
 {
 	"id": "liquid-templates",
 	"name": "Liquid Templates",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"minAppVersion": "0.13.10",
 	"description": "Empower your template with LiquidJS tags",
 	"author": "diomedet",
